@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Library.Api.Data;
+using Library.Api.Services.LibServices;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -30,6 +31,7 @@ namespace Library.Api
             services.AddControllers();
             services.AddDbContext<LibraryContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddScoped<ILibraryRepository, LibraryRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
