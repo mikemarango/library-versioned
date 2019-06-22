@@ -36,8 +36,7 @@ namespace Library.Api.Controllers
 
             return authorDtos;
         }
-
-        // GET api/values/5
+        // GET api/authors/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Author>> GetAsync(Guid id)
         {
@@ -52,24 +51,6 @@ namespace Library.Api.Controllers
                 Age = author.DateOfBirth.GetCurrentAge()
             };
             return Ok(authorDto);
-        }
-
-        // POST api/values
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
         }
     }
 }

@@ -21,7 +21,7 @@ namespace Library.Api.Controllers
         {
             Repository = repository;
         }
-        // GET: api/<controller>
+        // GET: api/authors/1/books
         [HttpGet]
         public async Task<ActionResult<IEnumerable<BookDto>>> GetBooks(Guid authorId)
         {
@@ -38,7 +38,7 @@ namespace Library.Api.Controllers
             return bookDtos;
         }
 
-        // GET api/<controller>/5
+        // GET: api/authors/1/books/1
         [HttpGet("{id}", Name = "GetBook")]
         public async Task<ActionResult<BookDto>> GetBook(Guid authorId, Guid id)
         {
@@ -55,24 +55,6 @@ namespace Library.Api.Controllers
             };
 
             return bookDto;
-        }
-
-        // POST api/<controller>
-        [HttpPost]
-        public void Post([FromBody]string value)
-        {
-        }
-
-        // PUT api/<controller>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        // DELETE api/<controller>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
         }
     }
 }
