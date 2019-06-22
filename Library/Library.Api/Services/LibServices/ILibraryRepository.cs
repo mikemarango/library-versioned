@@ -17,6 +17,7 @@ namespace Library.Api.Services.LibServices
         Task<Book> GetBook(Guid authorId, Guid id);
         Task<IEnumerable<Book>> GetBooks(Guid authorId);
         Task<bool> Save();
+        Task<bool> AuthorExists(Guid id);
         Task UpdateAuthor(Author author);
         Task UpdateBook(Book book);
     }

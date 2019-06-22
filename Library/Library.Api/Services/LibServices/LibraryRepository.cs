@@ -97,5 +97,10 @@ namespace Library.Api.Services.LibServices
         {
             return await context.SaveChangesAsync() >= 0;
         }
+
+        public async Task<bool> AuthorExists(Guid id)
+        {
+            return await context.Authors.AnyAsync(a => a.Id == id);
+        }
     }
 }
