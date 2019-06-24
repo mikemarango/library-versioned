@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Library.Api.Helpers;
 using Library.Api.Models;
 using Library.Api.Models.DTOs;
@@ -15,10 +16,12 @@ namespace Library.Api.Controllers
     public class AuthorsController : ControllerBase
     {
         public ILibraryRepository Repository { get; }
+        public IMapper Mapper { get; }
 
-        public AuthorsController(ILibraryRepository repository)
+        public AuthorsController(ILibraryRepository repository, IMapper mapper)
         {
             Repository = repository;
+            Mapper = mapper;
         }
         // GET api/authors
         [HttpGet]
@@ -37,8 +40,8 @@ namespace Library.Api.Controllers
             return authorDtos;
         }
         // GET api/authors/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Author>> GetAsync(Guid id)
+        [HttpGet("{id}", Name = "GetAuthor")]
+        public async Task<ActionResult<Author>> GetAuthor(Guid id)
         {
             var author = await Repository.GetAuthor(id);
             if (author == null)
@@ -51,6 +54,24 @@ namespace Library.Api.Controllers
                 Age = author.DateOfBirth.GetCurrentAge()
             };
             return Ok(authorDto);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<AuthorCreateDto>> AddAuthor([FromBody] AuthorCreateDto authorCreateDto)
+        {
+            if (authorCreateDto == null)
+                return BadRequest();
+
+            var author = Mapper.Map<Author>(authorCreateDto);
+
+            await Repository.AddAuthor(author);
+
+            if (!await Repository.SaveChanges())
+                return StatusCode(500);
+
+            var authorDto = Mapper.Map<AuthorDto>(author);
+
+            return CreatedAtRoute("GetAuthor", new { id = authorDto.Id }, authorDto);
         }
     }
 }

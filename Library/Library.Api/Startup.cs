@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Library.Api.Data;
 using Library.Api.Services.LibServices;
 using Microsoft.AspNetCore.Builder;
@@ -32,6 +33,7 @@ namespace Library.Api
             services.AddDbContext<LibraryContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddScoped<ILibraryRepository, LibraryRepository>();
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
         }
 

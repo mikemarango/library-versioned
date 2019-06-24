@@ -75,11 +75,14 @@ namespace Library.Api.Services.LibServices
             return await context.Books.SingleOrDefaultAsync(b => b.AuthorId == authorId && b.Id == id);
         }
 
-        public async Task AddBook(Guid authorId, Guid id)
+        public async Task AddBook(Guid authorId, Book book)
         {
-            await Task.Yield();
-            throw new NotImplementedException();
-            //await Task.FromException(new NotImplementedException());
+            var author = await GetAuthor(authorId);
+            if (author != null)
+            {
+                author.Books.Add(book);
+                await Task.CompletedTask;
+            }
         }
 
         public async Task UpdateBook(Book book)
@@ -93,9 +96,10 @@ namespace Library.Api.Services.LibServices
             await Task.CompletedTask;
         }
 
-        public async Task<bool> Save()
+        public async Task<bool> SaveChanges()
         {
             return await context.SaveChangesAsync() >= 0;
+            //return await Task.FromResult(true);
         }
 
         public async Task<bool> AuthorExists(Guid id)

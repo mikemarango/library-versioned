@@ -8,7 +8,7 @@ namespace Library.Api.Services.LibServices
     public interface ILibraryRepository
     {
         Task AddAuthor(Author author);
-        Task AddBook(Guid authorId, Guid id);
+        Task AddBook(Guid authorId, Book book);
         Task DeleteAuthor(Author author);
         Task DeleteBook(Author author);
         Task<Author> GetAuthor(Guid id);
@@ -16,7 +16,7 @@ namespace Library.Api.Services.LibServices
         Task<IEnumerable<Author>> GetAuthors(IEnumerable<Guid> ids);
         Task<Book> GetBook(Guid authorId, Guid id);
         Task<IEnumerable<Book>> GetBooks(Guid authorId);
-        Task<bool> Save();
+        Task<bool> SaveChanges();
         Task<bool> AuthorExists(Guid id);
         Task UpdateAuthor(Author author);
         Task UpdateBook(Book book);
