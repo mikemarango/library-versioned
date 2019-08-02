@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -28,7 +29,8 @@ namespace Library.Api.Controllers
         public async Task<ActionResult<IEnumerable<AuthorDto>>> Get()
         {
             var authors = await Repository.GetAuthors();
-
+            Stopwatch stopwatch = Stopwatch.StartNew();
+            //var authorDtos = Mapper.Map<IEnumerable<Author>>(authors);
             var authorDtos = authors.Select(author => new AuthorDto
             {
                 Id = author.Id,
@@ -36,6 +38,7 @@ namespace Library.Api.Controllers
                 Genre = author.Genre,
                 Age = author.DateOfBirth.GetCurrentAge()
             }).ToList();
+            stopwatch.Stop();
 
             return authorDtos;
         }
